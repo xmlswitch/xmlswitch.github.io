@@ -4,7 +4,7 @@
 const fileInput = document.getElementById('choose_file');
 let fileContent = 'No file loaded.';
 let theID = 'ID';
-let theValue = '';
+let theValue = 'ARTIST';
 
 fileInput.onchange = () => {
     let c = document.getElementById('file_confirm');
@@ -48,6 +48,8 @@ function parseXML() {
     let x = xmlDoc.getElementsByTagName(theID); //[0].childNodes;
     //alert(x.length);
 
+    let swaps = 0;
+
     for (let i = 1; i < x.length; i++) {
         let currentID = xmlDoc.getElementsByTagName(theID)[i].childNodes[0].nodeValue;
         let previousID = xmlDoc.getElementsByTagName(theID)[i - 1].childNodes[0].nodeValue;
@@ -58,9 +60,12 @@ function parseXML() {
             xmlDoc.getElementsByTagName(theValue)[i].childNodes[0].nodeValue = previousVal;
             xmlDoc.getElementsByTagName(theValue)[i - 1].childNodes[0].nodeValue = currentVal;
 
-            alert(currentVal + " " + previousVal);
+            //alert(currentVal + " " + previousVal);
+            swaps += 1;
         }
     }
+
+    alert(swaps + " swaps have been made :-)")
 
     saveFile(xmlDoc);
 }
