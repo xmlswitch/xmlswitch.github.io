@@ -3,8 +3,8 @@
 
 const fileInput = document.getElementById('choose_file');
 let fileContent = 'No file loaded.';
-let theID = 'ID';
-let theValue = 'ARTIST';
+let theID = prompt("Please select the name for the identifier value", "ID");
+let theValue = prompt("Please select the name for the subject value", "ARTIST");
 
 fileInput.onchange = () => {
     let c = document.getElementById('file_confirm');
