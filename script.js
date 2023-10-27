@@ -3,6 +3,8 @@
 
 const fileInput = document.getElementById('choose_file');
 let fileContent = 'No file loaded.';
+let theID = 'ID';
+let theValue = '';
 
 fileInput.onchange = () => {
     let c = document.getElementById('file_confirm');
@@ -43,18 +45,18 @@ function parseXML() {
 
     //alert(newfile);
 
-    let x = xmlDoc.getElementsByTagName('ID'); //[0].childNodes;
+    let x = xmlDoc.getElementsByTagName(theID); //[0].childNodes;
     //alert(x.length);
 
     for (let i = 1; i < x.length; i++) {
-        let currentID = xmlDoc.getElementsByTagName('ID')[i].childNodes[0].nodeValue;
-        let previousID = xmlDoc.getElementsByTagName('ID')[i - 1].childNodes[0].nodeValue;
+        let currentID = xmlDoc.getElementsByTagName(theID)[i].childNodes[0].nodeValue;
+        let previousID = xmlDoc.getElementsByTagName(theID)[i - 1].childNodes[0].nodeValue;
         if (currentID == previousID) {
-            let currentVal = xmlDoc.getElementsByTagName('ARTIST')[i].childNodes[0].nodeValue;
-            let previousVal = xmlDoc.getElementsByTagName('ARTIST')[i - 1].childNodes[0].nodeValue;
+            let currentVal = xmlDoc.getElementsByTagName(theValue)[i].childNodes[0].nodeValue;
+            let previousVal = xmlDoc.getElementsByTagName(theValue)[i - 1].childNodes[0].nodeValue;
 
-            xmlDoc.getElementsByTagName('ARTIST')[i].childNodes[0].nodeValue = previousVal;
-            xmlDoc.getElementsByTagName('ARTIST')[i - 1].childNodes[0].nodeValue = currentVal;
+            xmlDoc.getElementsByTagName(theValue)[i].childNodes[0].nodeValue = previousVal;
+            xmlDoc.getElementsByTagName(theValue)[i - 1].childNodes[0].nodeValue = currentVal;
 
             alert(currentVal + " " + previousVal);
         }
