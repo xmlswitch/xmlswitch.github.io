@@ -91,7 +91,7 @@ function saveFile(xmlDoc) {
     textFile = window.URL.createObjectURL(data);
     window.open(textFile, "_blank")
 
-    download(xmlDoc, 'output.xml', 'text/xml');
+    download([newfile], 'output.xml', 'text/xml');
 }
 
 function clearInputFile(f) {
