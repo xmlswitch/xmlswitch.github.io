@@ -90,6 +90,8 @@ function saveFile(xmlDoc) {
 
     textFile = window.URL.createObjectURL(data);
     window.open(textFile, "_blank")
+
+    download(xmlDoc, 'output.xml', 'text/xml');
 }
 
 function clearInputFile(f) {
@@ -105,5 +107,24 @@ function clearInputFile(f) {
             form.reset();
             parentNode.insertBefore(f, ref);
         }
+    }
+}
+
+
+function download(data, filename, type) {
+    var file = new Blob([data], {type: type});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
     }
 }
