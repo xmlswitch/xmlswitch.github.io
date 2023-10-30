@@ -5,6 +5,7 @@ const fileInput = document.getElementById('choose_file');
 let fileContent = 'No file loaded.';
 let theID = prompt("Please select the name for the identifier value", "ID");
 let theValue = prompt("Please select the name for the subject value", "ARTIST");
+let fileText = "";
 
 fileInput.onchange = () => {
     let c = document.getElementById('file_confirm');
@@ -15,20 +16,21 @@ fileInput.onchange = () => {
         c.innerText = 'File loaded!';
         console.log(selectedFile);
         if (checkFileType(fileInput.value)) {
-            filetoText(selectedFile);
+            filetoText(selectedFile, c);
         } else {
             clearInputFile(c);
         }
     }
 }
 
-function filetoText(f) {
+function filetoText(f, c) {
     let reader = new FileReader();
     reader.readAsText(f, 'UTF-8');
     reader.onload = readerEvent => {
         fileContent = readerEvent.target.result;
         document.getElementById('file_confirm').innerText = fileContent;
         parseXML();
+        c.innerText = fileText;
     }
 }
 
@@ -73,6 +75,8 @@ function parseXML() {
 function saveFile(xmlDoc) {
     let serializer = new XMLSerializer();
     let newfile = serializer.serializeToString(xmlDoc);
+
+    fileText = newfile;
 
     let textFile = null;
 
