@@ -37,7 +37,7 @@ function filetoText(f, c) {
 function checkFileType(f) {
     let extension = f.match(/\.[0-9a-z]+$/i);
     //alert(extension);
-    if (extension == '.xml') { return true } else { return false }
+    if (extension == '.xml') { return true; } else { return false; }
 }
 
 function parseXML() {
@@ -67,7 +67,7 @@ function parseXML() {
         }
     }
 
-    alert(swaps + " swaps have been made :-)")
+    alert(swaps + " swaps have been made :-)");
 
     saveFile(xmlDoc);
 }
@@ -89,7 +89,7 @@ function saveFile(xmlDoc) {
     }
 
     textFile = window.URL.createObjectURL(data);
-    window.open(textFile, "_blank")
+    window.open(textFile, "_blank");
 
     download([newfile], 'output.xml', 'text/xml');
 }
