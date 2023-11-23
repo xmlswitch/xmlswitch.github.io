@@ -3,12 +3,14 @@
 
 const fileInput = document.getElementById('choose_file');
 let fileContent = 'No file loaded.';
-let theID = prompt("Please select the name for the identifier value", "ID");
-let theValue = prompt("Please select the name for the subject value", "ARTIST");
+let theID = '';
+let theValue = '';
 let fileText = "";
 
 fileInput.onchange = () => {
     let c = document.getElementById('file_confirm');
+	let codeBlock = document.getElementById('code_block');
+	let fileSelect = document.getElementById('choose_file');
     if (fileInput.files.length == 0) {
         c.innerText = 'No file loaded!';
     } else {
@@ -16,9 +18,9 @@ fileInput.onchange = () => {
         c.innerText = 'File loaded!';
         console.log(selectedFile);
         if (checkFileType(fileInput.value)) {
-            filetoText(selectedFile, c);
+            filetoText(selectedFile, codeBlock);
         } else {
-            clearInputFile(c);
+            clearInputFile(fileSelect);
         }
     }
 }
@@ -28,7 +30,6 @@ function filetoText(f, c) {
     reader.readAsText(f, 'UTF-8');
     reader.onload = readerEvent => {
         fileContent = readerEvent.target.result;
-        document.getElementById('file_confirm').innerText = fileContent;
         parseXML();
         c.innerText = fileText;
     }
@@ -36,20 +37,19 @@ function filetoText(f, c) {
 
 function checkFileType(f) {
     let extension = f.match(/\.[0-9a-z]+$/i);
-    //alert(extension);
     if (extension == '.xml') { return true; } else { return false; }
 }
 
 function parseXML() {
+	theID = prompt("Please select the name for the identifier value", "ID");
+	theValue = prompt("Please select the name for the subject value", "ARTIST");
+	
+	
     let parser = new DOMParser();
-    //alert(fileContent);
     let xmlDoc = parser.parseFromString(fileContent, "application/xml");
 
-    //alert(newfile);
-
-    let x = xmlDoc.getElementsByTagName(theID); //[0].childNodes;
-    //alert(x.length);
-
+    let x = xmlDoc.getElementsByTagName(theID); 
+	
     let swaps = 0;
 
     for (let i = 1; i < x.length; i++) {
@@ -62,7 +62,6 @@ function parseXML() {
             xmlDoc.getElementsByTagName(theValue)[i].childNodes[0].nodeValue = previousVal;
             xmlDoc.getElementsByTagName(theValue)[i - 1].childNodes[0].nodeValue = currentVal;
 
-            //alert(currentVal + " " + previousVal);
             swaps += 1;
         }
     }

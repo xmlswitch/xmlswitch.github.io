@@ -12,24 +12,32 @@
 </head>
 
 <body>
-    <div class='header'>
+    <div id='header' class='w3-container w3-teal'>
         <h1>XML Switch</h1>
     </div>
 
-    <hr>
     <br>
 
-    <div class='instructions'>
+    <div id='instructions' class='w3-container w3-bottombar'>
         <p>Select an xml file from your computer below.</p>
+		<p>Once you have selected your file, you will be asked for an ID and a target value.</p>
         <br>
         <p>All processing is done locally.</p>
     </div>
 
     <br>
 
-    <input type='file' id='choose_file' name='choose_file'>
-    <br>
-    <p id='file_confirm'>No file loaded!</p>
+	<div id='file-select' class='w3-container w3-bottombar''>
+		<input type='file' id='choose_file' name='choose_file'>
+		<br>
+		<p id='file_confirm'>No file loaded!</p>
+	</div>
+	
+	<br>
+	
+	<div id="xml-code" class='w3-container w3-bottombar''>
+		<pre><code id='code_block'></code></pre>
+	</div>
 
 </body>
 
