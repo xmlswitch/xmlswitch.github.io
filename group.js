@@ -1,6 +1,8 @@
 const fileInput = document.getElementById('choose_file');
 let fileContent = '';
 
+let names = [];
+
 fileInput.onchange = () => {
     let inputText = document.getElementById('file_confirm');
     let fileSelect = document.getElementById('choose_file');
@@ -44,7 +46,79 @@ function filetoText(f) {
     reader.readAsText(f, 'UTF-8');
     reader.onload = readerEvent => {
         fileContent = readerEvent.target.result;
+        //process file here
+        let lineCount = getLineCount(fileContent);
+        alert(lineCount);
+
+        processText(fileContent, lineCount);
+
     }
+}
+
+function processText(text, lineCount) {
+    lines = text.split('\n');
+
+    let columns = parse(lines[0]);
+    let names = [];
+    let groups = [];
+
+    if (columns.includes("user.user_name") && columns.includes("group")) {
+        //process here
+        let userIndex = columns.indexOf("user.user_name");
+        let groupIndex = columns.indexOf("group");
+
+        for (let i = 1; i < lineCount; i++) {
+            let row = parse(lines[i]);
+            let name = row[userIndex];
+            let group = row[groupIndex];
+
+            if (!names.includes(name)) { names.push(name) }
+            if (!groups.includes(group)) { groups.push(group) }
+        }
+
+        names.sort();
+        groups.sort();
+
+        let final = [];
+
+        final.push(names);
+
+        for (group in groups) {
+            final.push(new Array(names.length));
+        }
+
+        for (let i = 1; i < lineCount; i++) {
+            let row = parse(lines[i]);
+            let name = row[userIndex];
+            let group = row[groupIndex];
+
+            let x = names.indexOf(name);
+            let y = groups.indexOf(group);
+
+            final[y][x] = group;
+        }
+        alert("Done");
+
+        outputData(final);
+
+    } else {
+        alert('Process failed!\nPlease make sure your csv export contains the user ID and group columns');
+    }
+    console.log(names);
+    console.log(groups);
+}
+
+function outputData(rows) {
+    let csvContent = "data:text/csv;charset=utf-8," +
+        rows.map(e => e.join(",")).join("\n");
+
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "output.csv");
+    document.body.appendChild(link); // Required for FF
+
+    link.click();
 }
 
 // Parse a CSV row, accounting for commas inside quotes                   
@@ -66,6 +140,16 @@ function parse(row) {
     });
     entries.push(entry.join(''));
     return entries;
+}
+
+function getLineCount(text) {
+    var nLines = 0;
+    for (var i = 0, n = text.length; i < n; ++i) {
+        if (text[i] === '\n') {
+            ++nLines;
+        }
+    }
+    return nLines;
 }
 
 function exampleCSV() {
