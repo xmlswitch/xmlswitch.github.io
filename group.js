@@ -93,7 +93,7 @@ function processText(text, lineCount) {
             let group = row[groupIndex];
 
             let x = names.indexOf(name);
-            let y = groups.indexOf(group);
+            let y = groups.indexOf(group) + 1;
 
             final[y][x] = group;
         }
