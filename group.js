@@ -84,7 +84,7 @@ function processText(text, lineCount) {
         final.push(names);
 
         for (group in groups) {
-            final.push(new Array(names.length));
+            final.push(new Array(names.length).fill(" "));
         }
 
         for (let i = 1; i < lineCount; i++) {
