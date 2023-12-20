@@ -48,7 +48,7 @@ function filetoText(f) {
         fileContent = readerEvent.target.result;
         //process file here
         let lineCount = getLineCount(fileContent);
-        alert(lineCount);
+        //alert(lineCount);
 
         processText(fileContent, lineCount);
 
