@@ -97,6 +97,10 @@ function processText(text, lineCount) {
 
             final[y][x] = group;
         }
+
+        for (let i = 1; i++; i < groups.length) {
+            console.log();
+        }
         alert("Done");
 
         outputData(final);
@@ -104,8 +108,8 @@ function processText(text, lineCount) {
     } else {
         alert('Process failed!\nPlease make sure your csv export contains the user ID and group columns');
     }
-    console.log(names);
-    console.log(groups);
+    //console.log(names);
+    //console.log(groups);
 }
 
 function outputData(rows) {
