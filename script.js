@@ -41,8 +41,8 @@ function checkFileType(f) {
 }
 
 function parseXML() {
-	theID = prompt("Please select the name for the identifier value", "ID");
-	theValue = prompt("Please select the name for the subject value", "ARTIST");
+	theID = prompt("Please select the name for the identifier value", "serial_number");
+	theValue = prompt("Please select the name for the subject value", "asset");
 	
 	
     let parser = new DOMParser();
@@ -61,6 +61,12 @@ function parseXML() {
 
             xmlDoc.getElementsByTagName(theValue)[i].childNodes[0].nodeValue = previousVal;
             xmlDoc.getElementsByTagName(theValue)[i - 1].childNodes[0].nodeValue = currentVal;
+			
+			let currentDisplayVal = xmlDoc.getElementsByTagName(theValue)[i].getAttribute("display_value");
+			let previousDisplayVal = xmlDoc.getElementsByTagName(theValue)[i-1].getAttribute("display_value");
+			
+			xmlDoc.getElementsByTagName(theValue)[i].setAttribute("display_value", previousDisplayVal);
+            xmlDoc.getElementsByTagName(theValue)[i - 1].setAttribute("display_value", currentDisplayVal);
 
             swaps += 1;
         }
